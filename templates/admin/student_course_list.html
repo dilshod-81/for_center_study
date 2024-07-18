@@ -1,0 +1,74 @@
+{% extends 'boss/base.html' %}
+{% block title %} Student Courses {% endblock title %}
+
+
+{% block content %}
+
+
+<style>
+.card {
+    border: none;
+    overflow-x: auto;
+}
+</style>
+<div class="col-12">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h4 class="mb-sm-0 font-size-18">Uztoz bilan bir dars shartnomalar ruyxati</h4>
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="{% url 'income' %}">Kirim</a></li>
+                <li class="breadcrumb-item active">Barcha kurslar</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 15px;" class="card shadow col-12">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title">Barcha kurslar</h4>
+        <div>
+            <a class="btn btn-outline-primary" href="{% url 'courses' %}">Barcha</a>
+            <a class="btn btn-outline-success" href="{% url 'ongoing-courses' %}">Davom etayotgan</a>
+            <a class="btn btn-outline-danger" href="{% url 'ended-courses' %}">Tugagan</a>
+        </div>
+    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+         <th scope="col">O'quvchi I.F.O</th>
+            <th scope="col">Kurs nomi</th>
+            <th scope="col">Ustoz</th>
+            <th scope="col">Bir dars Narxi</th>
+            <th scope="col">Kunlar</th>
+            <th scope="col">Dars vaqti</th>
+
+            <th scope="col">Ekshin</th>
+
+        </tr>
+    </thead>
+    <tbody>
+         {% for student_course in student_courses %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ student_course.student.full_name }}</td>
+            <td>{{ student_course.course.name}}</td>
+               <td>{{ student_course.course.teacher }}</td>
+            <td>{{ student_course.price }}</td>
+            <td>
+                {% if student_course.course.days == '1' %}
+                Dush-Chor-Jum
+                {% else %}
+                Sesh-Pay-Shan
+                {% endif %}
+            </td>
+            <td>{{ student_course.course.time}}</td>
+
+            <td><a class="btn btn-danger badge" href="{% url 'edit-student-courses' student_course.id %}">Tahrirlash</a></td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+{% endblock content %}

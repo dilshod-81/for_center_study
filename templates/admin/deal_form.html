@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Deal</title>
+</head>
+{% block content %}
+<body>
+    <h1>Create a new Deal</h1>
+
+ <form method="post">
+        {% csrf_token %}
+         {{ form|crispy }}
+        <button type="submit">Save</button>
+    </form>
+
+</body>
+{% endblock content %}
+</html>

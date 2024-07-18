@@ -1,0 +1,161 @@
+{% extends "base_for_student.html" %}
+
+{% block content %}
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">O'quvchining boshqaruv paneli</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{% url 'student-dashboard' %}">Boshqaruv paneli</a></li>
+                    <li class="breadcrumb-item active"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+  </div><!-- end row-->
+
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Hamyon</h4>
+            </div>
+            <div class="card-body">
+                <p>Hamyon balansi: {{ student_wallet }} UZS</p>
+                {% if student_wallet <= -500000 %}
+                    <div class="alert alert-danger">hoziroq hamyonni to`ldiring</div>
+                {% elif student_wallet <= -200000 %}
+                    <div class="alert alert-warning">Sizning hamyoningiz minusda, siz unini to`ldirishingizni suraymiz</div>
+                {% endif %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+  </div> <!-- end row -->
+
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Sizga berilgan vazifa</h4>
+            </div>
+            <div class="card-body" style="overflow-x: auto;">
+                <table id="datatable1" class="table table-bordered dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Vazifa mavzusi</th>
+                            <th>Izohi</th>
+                            <th>Kurs</th>
+                            <th>Vazifa berilgan Sana</th>
+                            <th>Uy vazifasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ task.task_name }}</td>
+                            <td>{{ task.task_description }}</td>
+                            <td>{{ task.course.name }}</td> <!-- Display course name -->
+                            <td>{{ task.date|date:"F j, Y, g:i a" }}</td>
+                            <td>
+                                {% if task.file %}
+                                <a href="{{ task.file.url }}">{{ task.file.name }}</a>
+                                {% else %}
+                                No file attached
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+  </div> <!-- end row -->
+
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Uy vazifa baholari</h4>
+            </div>
+            <div class="card-body" style="overflow-x: auto;">
+                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>O'quvchi I.F.Sh</th>
+                            <th>Vazifa mavzusi</th>
+                            <th>Baho</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for grade in grades %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ grade.student }}</td>
+                            <td>{{ grade.task }}</td>
+                            <td>{{ grade.grade }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+  </div> <!-- end row -->
+
+
+ <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Uy vazifa baholari</h4>
+            </div>
+            <div class="card-body" style="overflow-x: auto;">
+                <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th width="3%">#</th>
+
+                            <th>Summa:</th>
+                            <th> Time:</th>
+                            <th>Date:</th>
+                             <th>Download Receipt</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                     {% if payments %}
+                         {% for payment in payments %}
+                        <tr>
+                            <td width="3%">{{ forloop.counter }}</td>
+                            <td>{{ payment.summ }}</td>
+                            <td>{{ payment.time }}</td>
+                            <td>{{ payment.date }}</td>
+                            <td>
+                                <form action="{% url 'download_pdf' payment.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button class="btn-danger" type="submit">Download Receipt</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                      <p>No payments found.</p>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+  </div>
+<p>{{attendance_group}}</p>
+
+{% endblock content %}

@@ -1,0 +1,172 @@
+{% extends 'boss/base.html' %}
+{% block title %} {{ course.name }} {% endblock title %}
+
+{% block content %}
+<style>
+
+ table .red{
+      background-color: rgba(247, 30, 30, 0.397);
+}
+table .yellow{
+      background-color: rgba(221, 235, 23, 0.486);
+}
+
+</style>
+<div class="row">
+      <div class="col-10">  <h5>{{course.name}} <br> {{course.teacher}}</h5></div>
+     <div class="col-10">  <h5>Kurs boshlangan sana: {{course.start_date|date:"d.m.Y"}} </h5></div>
+    <hr>
+    {% for a, b in kun %}
+            {% if  a ==  course.das %}
+           <p>Dars o'tiladigan  hafta kunlari:  <b>{{ b }}</b> <p>
+            {% endif %}
+            {% endfor %}
+
+      <div class="col-2">
+            <form  method="post"> {% csrf_token %}
+            </form>
+      </div>
+</div>
+<br>
+<div class="">
+      <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"> O'quvchilar ro'yxati</h4>
+                    </div>
+                    <div class="card-body">
+      <table  id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+            <thead>
+                  <tr>
+                    <th style="width: 3%;"   scope="col">#</th>
+                    <th scope="col">Full Name</th>
+                    <th>Balans</th>
+                    {% for i in students %}
+
+                       {% if forloop.counter < 2 %}
+                       {{i.attendances.date|date:"d.m.Y"}}
+                       
+                      {% endif %}
+                    {% endfor %}
+
+
+                  </tr>
+                </thead>
+
+                  <tbody>
+                  {% for i in course.students.all %}
+                  {% if i.wallet < 0 %}
+                  <tr class="yellow" >
+                        <th class="yellow" style="width: 3%;"  scope="row">{{forloop.counter}}</th>
+                        <td class="yellow" >{{i.full_name}}</td>
+                        <td class="yellow" style="width: 3%;"  >{{i.wallet}}</td>
+                    </tr>
+                  {% elif i.wallet < -100000   %}
+                  <tr class="red" >
+                      <th class="red" style="width: 3%;"  scope="row">{{forloop.counter}}</th>
+                      <td class="red" >{{i.full_name}}</td>
+                      <td class="red" style="width: 3%;"  >{{i.wallet}}</td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                        <th style="width: 3%;"  scope="row">{{forloop.counter}}</th>
+                        <td>{{i.full_name}}</td>
+                        <td style="width: 3%;" >{{i.wallet}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+
+      </table>
+
+</div>
+</div>
+</div>
+</div>
+
+<style  type="text/css">
+    .header{
+        margin-left: 15px;
+    }
+
+    table td.absent{
+        background-color: rgb(49, 49, 49);
+      }
+      .vertical{
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+      }
+</style>
+  <!-- start page title -->
+  <div class="row">
+      <div class="col-12">
+          <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+              <h4 class="mb-sm-0 font-size-18">Davomatni ko'rish </h4>
+
+              <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item active">Davomat </li>
+                  </ol>
+              </div>
+          </div>
+      </div>
+    </div>
+<div class=" ">
+      <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{course.name}}</h4>
+                    </div>
+                    <div class="card-body">
+      <table class="table  table-hover table-bordered ">
+            <thead>
+                  <tr>
+                    <th style="width: 3%;"   scope="col">#</th>
+                    <th scope="col">Full Name</th>
+                    {% for i in students %}
+
+                       {% if forloop.counter < 2 %}
+                       {{i.attendances.date}}
+                       {% for a  in i.attendances %}
+                      <td class="vertical" style="width: 3%;" >{{a.date|date:"d.m.Y"}}</td>
+                      {% endfor %}
+                      {% endif %}
+                    {% endfor %}
+
+
+                  </tr>
+                </thead>
+
+                  <tbody>
+                  {% for i in students %}
+
+                    <tr>
+                      <th style="width: 3%;"  scope="row">{{forloop.counter}}</th>
+                      <td>{{i.full_name}}</td>
+                      {% for a in i.attendances %}
+
+                      {% if a.present == False %}
+                      <td style="width: 3%;" class="absent" >-</td>
+                      {% elif  a.present == True %}
+                      <td  style="width: 3%;" > + </td>
+                      {% else %}
+                      <td  style="width: 3%;" > - </td>
+                      {% endif %}
+
+                      {% endfor %}
+                    </tr>
+
+                    {% endfor %}
+                  </tbody>
+
+      </table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock content %}

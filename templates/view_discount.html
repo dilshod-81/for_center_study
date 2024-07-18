@@ -1,0 +1,75 @@
+{% extends 'boss/base.html' %}
+{% block title %} Barcha ish haqi tarqatishlar {% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="col-12">
+      <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <h4 class="mb-sm-0 font-size-18">Chegirmalar</h4>
+          <h4 class="mb-sm-0 font-size-18">Barcha bonuslar : {{ total_discount }} </h4>
+
+          <div class="page-title-right">
+              <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item"><a href="{% url 'income' %}">Kirim</a></li>
+                  <li class="breadcrumb-item active">Ish haqilar</li>
+              </ol>
+          </div>
+      </div>
+</div>
+
+<div class="row">
+
+          <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title">Barcha chegirmalar</h4>
+
+              </div>
+              <div class="card-body" style="overflow-x: auto;">
+                  <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                        <thead>
+                          <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Ism, Familiya</th>
+                              <th scope="col">Telefon raqam</th>
+                              <th scope="col">Chegirma miqdori</th>
+                              <th scope="col">Sana</th>
+                              <th scope="col">Berilgan vaqt</th>
+                              <th scope="col">Chegirma berganning F.I.O</th>
+
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                              {% for discount in discounts %}
+                          <tr>
+                              <th scope="row">{{ forloop.counter }}</th>
+                              <td>{{discount.student.full_name}}</td>
+                              <td>{{discount.student.phone_number}}</td>
+                              <td>{{discount.discount_summ}}</td>
+                              <td>{{discount.date|date:"d.m.Y"}}</td>
+                              <td>{{ discount.time }}</td>
+                              <td>{{ discount.recepient.first_name  }} {{ discount.recepient.last_name  }}</td>
+
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                  </table>
+              </div>
+
+
+
+          </div>
+          <!-- end cardaa -->
+      </div> <!-- end col -->
+
+  </div> <!-- end row -->
+
+    <a href="{% url 'add_discount' %}"  class="btn btn-primary">Chegerma yaratish</a>
+  <a href="/" class="btn btn-danger">Ortga qaytish</a>
+
+
+
+{% endblock content %}
+
+

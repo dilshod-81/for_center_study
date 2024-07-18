@@ -1,0 +1,68 @@
+{% extends 'boss/base.html' %}
+{% block title %} Barcha qabul {% endblock title %}
+
+{% block content %}
+<style>
+.card {
+    border: none;
+    overflow-x: auto;
+}
+</style>
+<div class="col-12">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h4 class="mb-sm-0 font-size-18">Barcha qabul</h4>
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="{% url 'income' %}">Kirim</a></li>
+                <li class="breadcrumb-item active">Barcha qabul</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 15px;" class="card shadow col-12">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title">Barcha qabul</h4>
+        <div>
+            <a class="btn btn-outline-primary" href="{% url 'all-reception' %}">Barcha</a>
+            <a class="btn btn-outline-success" href="{% url 'active-reception' %}">Faol</a>
+            <a class="btn btn-outline-danger" href="{% url 'inactive-reception' %}">Nofaol</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Ism</th>
+                <th scope="col">Telefon raqami</th>
+                <th scope="col">Kurs</th>
+                <th scope="col">Yaratilgan sana</th>
+                <th scope="col">Holati</th>
+                <th scope="col">Tahrirlash</th>
+                <th scope="col">Username ochish</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reception in receptions %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ reception.full_name }}</td>
+                <td>{{ reception.phone_number }}</td>
+                <td>{{ reception.course }}</td>
+                <td>{{ reception.created_at }}</td>
+                <td>
+                    <a href="{% url 'update-status1' reception.id %}">
+                        {% if reception.status %}
+                        ✅
+                        {% else %}
+                        ❌
+                        {% endif %}
+                    </a>
+                </td>
+                <td><a href="{% url 'edit_receiption1' reception.id %}">✏️</a></td>
+                <td><a href="{% url 'create-user' reception.id %}">✏️</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vazifani baholash</title>
+</head>
+<body>
+    <h1>Vazifani baholash: {{ task.task_name }}</h1>
+    <h2>Students</h2>
+    <ul>
+        {% for student in students %}
+            <li>{{ student.full_name }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Grades</h2>
+    <ul>
+        {% for grade in grades %}
+            <li>{{ grade.student.full_name }}: {{ grade.grade }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Assign Grade</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
+{% block content %}
+
+<style>
+ table .red {
+     background-color: rgba(247, 30, 30, 0.397);
+}
+table .yellow {
+     background-color: rgba(221, 235, 23, 0.486);
+}
+</style>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">Uyga vazifani baholash</h4>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"> Uyga vazifa mavzusi: <b><i>{{ task.task_name }}</i></b></h4>
+                </div>
+                <div class="card-body">
+                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th style="width: 3%;" scope="col">#</th>
+                                <th scope="col">O'quvchi I.F.O</th>
+                                <th>Rasmi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ student.full_name }}</td>
+                                    <td>
+                                        <img src="{% if student.image %}{{ student.image.url }}{% else %}{% static 'hi.jpg' %}{% endif %}" alt="{{ student.full_name }}" class="img-thumbnail" style="max-width: 60px;">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br>
+<div class="">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"><i>{{ task.task_name }}</i> - vazifaga quyilgan baholar</h4>
+                </div>
+                <div class="card-body">
+                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th style="width: 3%;" scope="col">#</th>
+                                <th scope="col">O'quvchi I.F.O</th>
+                                <th>Rasmi</th>
+                                <th>Baho</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for grade in task.grades.all %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ grade.student.full_name }}</td>
+                                    <td>
+                                        <img src="{% if grade.student.image %}{{ grade.student.image.url }}{% else %}{% static 'hi.jpg' %}{% endif %}" alt="{{ grade.student.full_name }}" class="img-thumbnail" style="max-width: 60px;">
+                                    </td>
+                                    <td><a href="{% url 'edit_grade' grade.id %}">{{ grade.grade }}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button style="margin-top:27px" type="submit" class="btn btn-primary">Saqlash</button>
+</form>
+
+{% endblock content %}

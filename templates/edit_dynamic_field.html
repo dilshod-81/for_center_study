@@ -1,0 +1,38 @@
+{% extends 'boss/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="col-12">
+ <div class="card">
+   <div class="card-header">
+        <div class="container">
+            <div class="card-header">
+                <h4 class="mb-4">Edit Dynamic Field</h4>
+            </div>
+             <div class="card-body" style="overflow-x: auto;">
+                <form method="post">
+                {% csrf_token %}
+                <div  class="auth-content my-auto">
+                    {{ form.name.label_tag }}<br>
+                    {{ form.name }}
+                </div>
+                <div  class="auth-content my-auto">
+                    {{ form.field_type.label_tag }}<br>
+                    {{ form.field_type }}
+                </div>
+                <div  class="auth-content my-auto">
+                    {{ form.choices.label_tag }}<br>
+                    {{ form.choices }}
+                </div>
+                <button type="submit" class="btn btn-primary">Update Field</button>
+                </form>
+                <a href="{% url 'list_dynamic_fields' %}" class="btn btn-secondary mt-3">Cancel</a>
+             </div>
+        </div>
+   </div>
+ </div>
+</div>
+
+
+{% endblock content %}}

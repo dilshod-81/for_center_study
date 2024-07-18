@@ -1,0 +1,73 @@
+
+{% extends 'boss/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+Foydlanuvchi yaratish
+{% endblock title %}
+{% block content %}
+
+
+
+      <div class="container"><br>
+            {% if request.user.is_staff == True %}
+            <h5>Foydlanuvchi yaratish </h5>
+
+            <form  method="post" enctype="multipart/form-data">{% csrf_token %}
+                       {{ form|crispy }}
+                  <br>
+                  <button type="submit" class="btn btn-primary" > Yaratish </button>
+                  <a href="{% url 'index' %}"  class="btn btn-danger"> Ortga qaytish </a>
+            </form>
+            {% endif %}
+      </div>
+
+<!--{% load static %}-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Form</title>-->
+<!--    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container mt-5">-->
+<!--        {% if request.user.is_staff %}-->
+<!--            <h5>Foydalanuvchi yaratish</h5>-->
+<!--            <form method="post" enctype="multipart/form-data">-->
+<!--                {% csrf_token %}-->
+<!--                {% for field in form %}-->
+<!--                    <div class="form-group">-->
+<!--                        {{ field.label_tag }}-->
+<!--                        {{ field }}-->
+<!--                        {% if field.errors %}-->
+<!--                            <div class="alert alert-danger">-->
+<!--                                {% for error in field.errors %}-->
+<!--                                    {% if error == "This password is too similar to your other personal information." %}-->
+<!--                                        Sizning parolingiz boshqa shaxsiy ma'lumotlaringizga juda o'xshash bo'lmasligi kerak.-->
+<!--                                    {% elif error == "This password must contain at least 8 characters." %}-->
+<!--                                        Sizning parolingiz kamida 8 ta belgi bo'lishi kerak.-->
+<!--                                 {% elif error == "This password is too short. It must contain at least 8 characters." %}-->
+<!--                                        Bu parol juda qisqa. U kamida 8 ta belgidan iborat boʻlishi kerak.-->
+<!--                                    {% elif error == "This password is too common." %}-->
+<!--                                        Sizning parolingiz keng tarqalgan parol bo'lmasligi kerak.-->
+<!--                                    {% elif error == "This password is entirely numeric." %}-->
+<!--                                        Sizning parolingiz to'liq raqamli bo'lmasligi kerak.-->
+<!--                                    {% else %}-->
+<!--                                        {{ error }}-->
+<!--                                    {% endif %}-->
+<!--                                {% endfor %}-->
+<!--                            </div>-->
+<!--                        {% endif %}-->
+<!--                    </div>-->
+<!--                {% endfor %}-->
+<!--                <button type="submit" class="btn btn-primary">Yaratish</button>-->
+<!--                <a href="{% url 'index' %}" class="btn btn-danger">Ortga qaytish</a>-->
+<!--            </form>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+<!--    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+{% endblock content %}

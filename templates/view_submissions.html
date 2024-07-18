@@ -1,0 +1,38 @@
+{% extends 'boss/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-4">Submitted Registrations</h4>
+            </div>
+            <div class="card-body" style="overflow-x: auto;">
+                <table class="table table-bordered dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            {% if submissions %}
+                                {% for field_name, field_info in submissions.0.data.items %}
+                                    <th scope="col">{{ field_name }}</th>
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for submission in submissions %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                {% for field_name, field_info in submission.data.items %}
+                                    <td>{{ field_info.value }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

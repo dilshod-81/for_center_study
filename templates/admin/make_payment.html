@@ -1,0 +1,36 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="en">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Make Payment</title>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="container">&ndash;&gt;-->
+<!--&lt;!&ndash;        <h2>Make a Payment</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;        <form method="post">&ndash;&gt;-->
+<!--&lt;!&ndash;            {% csrf_token %}&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label for="student_id">Student</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <select id="student_id" name="student_id" class="form-control" required>&ndash;&gt;-->
+<!--&lt;!&ndash;                    {% for student in students %}&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option value="{{ student.id }}">{{ student.full_name }}</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    {% endfor %}&ndash;&gt;-->
+<!--&lt;!&ndash;                </select>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label for="course_id">To'lov kursi</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <select id="course_id" name="course_id" class="form-control" required>&ndash;&gt;-->
+<!--&lt;!&ndash;                    {% for course in courses %}&ndash;&gt;-->
+<!--&lt;!&ndash;                    <option value="{{ course.id }}">{{ course.name }}</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    {% endfor %}&ndash;&gt;-->
+<!--&lt;!&ndash;                </select>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label for="summ">Amount</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="number" id="summ" name="summ" class="form-control" required>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <button type="submit" class="btn btn-primary">Make Payment</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </form>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->

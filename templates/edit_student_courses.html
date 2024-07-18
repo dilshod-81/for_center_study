@@ -1,0 +1,58 @@
+{% extends "boss/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>Bir dars narxi</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="student">O'quvchi</label>
+                        <select class="form-control" id="student" name="student">
+                            {% for student in students %}
+                                <option value="{{ student.id }}" {% if student.id == student_course.student.id %}selected{% endif %}>
+                                    {{ student.full_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="course">Kurs</label>
+                        <select class="form-control" id="course" name="course">
+                            {% for course in courses %}
+                                <option value="{{ course.id }}" {% if course.id == student_course.course.id %}selected{% endif %}>
+                                    {{ course.name }} >>> ({{ course.teacher }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Narxi</label>
+                        <input type="number" class="form-control" id="price" name="price" value="{{ student_course.price }}" step="0.01">
+                          <small class="form-text text-muted">Eski narx: {{ student_course.price }}</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Saqlash</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Add Bootstrap JS for functionality -->
+
+
+
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'boss/base.html' %}
+
+{% block title %}
+{% load static %}
+Kurs ochish
+{% endblock title %}
+{% block content %}
+
+<div class="container"><br>
+    <h5>Kurs ochish</h5>
+    {% if request.user.is_staff %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div id="div_id_name" class="form-group">
+            <label for="id_name" class="requiredField">Nomi</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div id="div_id_teacher" class="form-group">
+            <label for="id_teacher" class="requiredField">O'qituvchi</label>
+            <select name="teacher" class="form-select" required>
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="div_id_title" class="form-group">
+            <label for="id_title" class="requiredField">Title</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+
+        <div id="div_id_price" class="form-group">
+            <label for="id_price" class="requiredField">Narxi</label>
+            <input type="number" name="price" class="form-control" required>
+        </div>
+
+        <div id="div_id_students" class="form-group">
+            <label for="id_students" class="requiredField">O'quvchilar</label>
+            <div>
+                <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tanlash</th>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Telefon raqami</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox" name="students" value="{{ student.id }}" id="student_{{ student.id }}">
+                            </td>
+                            <td>
+                                <label class="form-check-label" for="student_{{ student.id }}">
+                                    {{ student.full_name }}
+                                </label>
+                            </td>
+                            <td>{{ student.phone_number }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div id="div_id_days" class="form-group">
+            <label for="id_days" class="requiredField">Kunlar</label>
+            <select name="days" class="form-select" required>
+                {% for value, label in days %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="div_id_room" class="form-group">
+            <label for="id_room" class="requiredField">Xona</label>
+            <input type="number" name="room" class="form-control" required>
+        </div>
+       <div id="div_id_time" class="form-group">
+            <label for="id_time" class="requiredField">Time</label>
+            <input type="text" name="time" class="form-control" required>
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary">Yaratish</button>
+        <a href="/" class="btn btn-danger">Ortga qaytish</a>
+    </form>
+    {% endif %}
+</div>
+
+
+{% endblock content %}

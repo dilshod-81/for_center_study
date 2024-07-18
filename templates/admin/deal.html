@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Deal</title>
+</head>
+<body>
+    <h1>Create a new Deal </h1>
+        {% for i in uquvchi %}
+    <p>{{i.price }} - {{i.student }} **{{i.teacher }}*** {{i.course.name }}</p>
+    {% endfor %}
+
+
+</body>
+</html>

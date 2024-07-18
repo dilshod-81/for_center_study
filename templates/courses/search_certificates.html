@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Certificates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 10px;
+        }
+        .card-header, .card-body {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Search Certificates</h1>
+                    </div>
+                    <div class="card-body">
+                        <form id="search-form" class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" id="search-query" name="q" placeholder="Enter student name" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="results" id="results">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#search-form').on('submit', function(event) {
+                event.preventDefault();
+                var query = $('#search-query').val();
+                $.ajax({
+                    url: "{% url 'ajax_search_certificates' %}",
+                    data: {
+                        'q': query
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#results').empty();
+                        var results = data.results;
+                        if (results.length > 0) {
+                            results.forEach(function(result) {
+                                $('#results').append(
+                                    '<div class="card result-item">' +
+                                    '<div class="card-body">' +
+                                    '<h5 class="card-title">' + result.student_name + '</h5>' +
+                                    '<p class="card-text">' + result.course_name + '</p>' +
+                                    '<a href="' + result.download_url + '" class="btn btn-primary">Download</a>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+                        } else {
+                            $('#results').append('<p class="text-danger">No certificates found.</p>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Uyga berilgan vazifalar </h4>
+          </div>
+          <div class="card-body">
+
+              <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                  <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Vazifa mavzusi</th>
+                      <th>Izohi</th>
+                      <th>Kurs nomi</th>
+                      <th>Sana </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for task in tasks %}
+                  <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td> <a href="{% url 'evaluate_task_detail' task.id %}">{{ task.task_name }}</a></td>
+                      <td>{{ task.task_description }}</td>
+                      <td>{{task.course}}</td>
+                       <td>{{ task.date|date:"F j, Y, g:i a" }}</td>
+
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+
+              </table>
+
+          </div>
+      </div>
+  </div> <!-- end col -->
+</div> <!-- end row -->
+
+{% endblock content %}
