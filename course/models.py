@@ -63,7 +63,8 @@ class Receiption(models.Model):
                 f"{self.course}"
                 f"{self.phone_number} "
                 f"{self.status} "
-                f"{self.created_at}")
+                f"{self.created_at}" 
+                f"{self.info_text}")
 
 #yangi
 class ReceiptionAdmin(models.Model):

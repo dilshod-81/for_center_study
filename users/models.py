@@ -14,7 +14,7 @@ class User(AbstractUser):
       def __str__(self):
             if  self.is_teacher == True and self.is_admin ==False:
                   return  "Ustoz: " + str( self.first_name ) + " "+str(self.last_name)
-            elif self.is_teacher == False and self.is_admin ==True:
+            elif self.is_teacher == False and self.is_admin ==True:      
                   return  "Admin: "+ str( self.first_name ) + " "+str(self.last_name)
             elif self.is_student == True and self.is_admin == False:
                   return "O'quvchi: " + str( self.first_name ) + " "+str(self.last_name)

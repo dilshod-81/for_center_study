@@ -1,25 +1,12 @@
-
-
 from pathlib import Path
+from django.conf import settings
+import pdfkit
 import os
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from .jazzmin import JAZZMIN_SETTINGS
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mu%o*!555_3i#ohr_9bvnr!pr-#z^spial)**uboqy&ixqnkkd'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY ='django-insecure-mu%o*!555_3i#ohr_9bvnr!pr-#z^spial)**uboqy&ixqnkkd'
 DEBUG = True
-
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -39,6 +26,7 @@ INSTALLED_APPS = [
     'payment',
     'api',
 ]
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -62,8 +50,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # 'main.views.base',
-
+               #'main.views.base',
+              
             ],
         },
     },
@@ -71,15 +59,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite4",
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -99,6 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -117,7 +108,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
-STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles')) 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -131,6 +122,7 @@ LOGIN_REDIRECT_URL = 'index'
 
 # settings.pyPDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
 
+JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
 
 JAZZMIN_UI_TWEAKS = {
     "theme": "flatly",  # Apply a classic light theme
@@ -147,6 +139,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_flat_style": False,  # Flat sidebar style
     "theme_switcher": False,  # Disable theme switcher
 }
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Example: 'smtp.gmail.com'

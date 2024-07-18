@@ -1,12 +1,6 @@
-from django.db import models
 from course.models import *
 from datetime import date
-import qrcode
-from io import BytesIO
-from django.core.files import File
-from django.utils.timezone import now
-from PIL import Image, ImageDraw, ImageFont
-from django.utils import timezone
+
 from course.models import Student, Course
 
 from django.db import models

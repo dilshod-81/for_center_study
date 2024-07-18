@@ -23,7 +23,7 @@ class StudentAdmin(admin.ModelAdmin):
       list_display=( 'id', 'full_name', 'wallet', 'token_id')
       search_fields = ['name', 'email']  # Enable search on name and email
 
-admin.site.register(AttendanceGroup, AttendanceGroupAdmin)
+admin.site.register(AttendanceGroup, AttendanceGroupAdmin)     
 admin.site.register(Student, StudentAdmin)
 
 @admin.register(Course)

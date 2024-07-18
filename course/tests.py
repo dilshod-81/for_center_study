@@ -1,3 +1,3 @@
-from django.test import TestCase
-
-# Create your tests here.
+import random
+import uuid
+print(random.randint(10000000, 99999999))

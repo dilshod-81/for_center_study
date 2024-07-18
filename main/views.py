@@ -282,7 +282,63 @@ def attendance_detail(request, id):
 #     return render(request, 'attendance.html', context)
 
 """Har bor kurs  uchun detail sahifa"""
-@login_required
+#@login_required
+# def attendance(request, id):
+#     attendancegroup = get_object_or_404(AttendanceGroup, id=id)
+#     students = attendancegroup.course.students.all()
+#
+#     if request.method == "POST":
+#         for student in students:
+#             present = str(student.id) in request.POST
+#             status = request.POST.get(f'status_{student.id}', 'sababsiz')
+#
+#             # Find the StudentCourse record
+#             try:
+#                 student_course = StudentCourse.objects.get(student=student, course=attendancegroup.course)
+#                 price = student_course.price
+#             except StudentCourse.DoesNotExist:
+#                 messages.error(request, f"No course price found for student {student.full_name}.")
+#                 continue
+#
+#             # Create or update the attendance record
+#             attendance_record = Attendance.objects.create(
+#                 attendance=attendancegroup,
+#                 student=student,
+#                 present=present,
+#                 date=attendancegroup.date,
+#                 status=status
+#             )
+#
+#             # Update the wallet and create payment record if needed
+#             if status in ['sababsiz', 'kelgan']:
+#                 student.wallet -= price
+#                 student.save()
+#                 if price != 0:
+#                     PayToCourse.objects.create(
+#                         student=student,
+#                         course=attendancegroup.course,
+#                         transfer_summ=price,
+#                     )
+#
+#         total_number_of_students = students.count()
+#         total_number_of_not_attended_students = Attendance.objects.filter(
+#             attendance=attendancegroup,
+#             present=False
+#         ).count()
+#
+#         attendancegroup.status = f"{total_number_of_not_attended_students} of {total_number_of_students} students did not participate in that lesson"
+#         attendancegroup.save()
+#
+#         messages.success(request, 'Davomat olindi.')
+#         return redirect('course-detail', attendancegroup.course.id)
+#
+#     context = {
+#         'students': students,
+#         "attendancegroup": attendancegroup,
+#         'courses': get_courses(request)
+#     }
+#     return render(request, 'attendance.html', context)
+
 def attendance(request, id):
     attendancegroup = get_object_or_404(AttendanceGroup, id=id)
     students = attendancegroup.course.students.all()
@@ -299,6 +355,11 @@ def attendance(request, id):
             except StudentCourse.DoesNotExist:
                 messages.error(request, f"No course price found for student {student.full_name}.")
                 continue
+            except StudentCourse.MultipleObjectsReturned:
+                student_courses = StudentCourse.objects.filter(student=student, course=attendancegroup.course)
+                student_course = student_courses.first()  # You may need a more sophisticated way to choose the right one
+                price = student_course.price
+                messages.warning(request, f"Multiple course prices found for student {student.full_name}, using the first one.")
 
             # Create or update the attendance record
             attendance_record = Attendance.objects.create(
@@ -338,7 +399,6 @@ def attendance(request, id):
         'courses': get_courses(request)
     }
     return render(request, 'attendance.html', context)
-
 
 @login_required
 def course_detail(request, id):
